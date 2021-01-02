@@ -11,13 +11,17 @@ conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/Business",username
 
 //object of the statement class will help us to execute queries
 Statement st=conn.createStatement();
-ResultSet rs=st.executeQuery("select * from CustomerInfo");
+ResultSet rs=st.executeQuery("select * from CustomerInfo where location = 'Asia' and purchasedDate=curdate() LIMIT 1;");
 while(rs.next()) //setting pointer to a particular row
 {
-	System.out.println(rs.getString(1));
-	System.out.println(rs.getString(2));
-	System.out.println(rs.getInt(3));
-	System.out.println(rs.getString(4));
+	CustomerDetails customers = new CustomerDetails();
+	customers.setCourseName(rs.getString(1));
+	customers.setPurchasedDate(rs.getString(2));
+	customers.setAmount(rs.getInt(3));
+	customers.setLocation(rs.getString(4));
+
+	System.out.println(customers.getCourseName());
+	System.out.println(customers.getPurchasedDate());
 }
 conn.close();
 

@@ -2,10 +2,10 @@
 Learning automating Java connecting to MySQL DB, pulling data and pushing the data to an API
 
 # Details
-Create a MySQL DB. I created my DB by pulling a MySQL docker image:
+Create a MySQL DB. If creating DB by pulling a MySQL docker image, then:
 [Pull from docker](https://hub.docker.com/_/mysql)
 
-Start the container, then log in using Powershell (Windows):
+Start the container, create a network bridge, then log in using Powershell (Windows):
 
 `docker exec -it JavaDBSQL mysql -uroot -p`
 

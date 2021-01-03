@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -13,9 +14,10 @@ public class jsonToJava {
 		// TODO Auto-generated method stub
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn=null;
-		conn=DriverManager.getConnection("jdbc:mysql://3306/Business","user_java","root");
+		conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/Business",[user], [password]);
 
 		CustomerDetails customers = new CustomerDetails();
+		ArrayList<CustomerDetails> dbArray = new ArrayList<CustomerDetails>();
 
 		//object of the statement class will help us to execute queries
 		Statement st=conn.createStatement();
@@ -26,10 +28,15 @@ public class jsonToJava {
 			customers.setPurchasedDate(rs.getString(2));
 			customers.setAmount(rs.getInt(3));
 			customers.setLocation(rs.getString(4));
+
+			dbArray.add(customers);
 		}
 
-		ObjectMapper objmap = new ObjectMapper();
-		objmap.writeValue(new File("C:\\Users\\[path]\\JsonJava\\customerInfo.json"), customers);
+		for(int i=0; i<dbArray.size(), i++)
+		{
+			ObjectMapper objmap = new ObjectMapper();
+			objmap.writeValue(new File("C:\\Users\\Kevin\\eclipse-workspace\\JsonJava\\customerInfo"+i+".json"), dbArray.get(i));
+		}
 
 		conn.close();
 	}
